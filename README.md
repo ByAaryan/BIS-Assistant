@@ -24,10 +24,11 @@ Table of Contents
 - Usage
 - How it works
 - Development
+- Testing
 - Troubleshooting
+- Security & Privacy
 - Contributing
 - License
-- Contact
 
 --------------------------------------------------------------------------------
 
@@ -42,25 +43,45 @@ source .venv/bin/activate   # Linux / macOS
 .venv\Scripts\activate     # Windows (PowerShell)
 ```
 
-3. Install the required Python packages. There is no requirements.txt in the repo, but the project depends on the following packages:
+3. Install the required Python packages:
+
+```bash
+pip install -r requirements.txt
+```
+
+Or manually install dependencies:
 
 ```bash
 pip install PyQt6 python-dotenv google-genai
 ```
 
-Note: The package name for the GenAI client may vary depending on distribution; the code imports `from google import genai`. If pip cannot find `google-genai`, consult the official Google GenAI SDK documentation for the correct package name for your environment.
+**requirements.txt:**
+```
+PyQt6>=6.0.0
+python-dotenv>=1.0.0
+google-genai>=0.3.0
+```
 
 --------------------------------------------------------------------------------
 
 Configuration
 
-Create a .env file in the project root with your Gemini/GenAI API key. Example `.env`:
+Create a `.env` file in the project root with your Gemini/GenAI API key:
 
 ```text
-GEMINI_API_KEY=sk-xxxx-your-api-key-xxxx
+GEMINI_API_KEY=your-gemini-api-key-here
 ```
 
-Security: Do NOT commit your API key to version control. Keep `.env` in .gitignore.
+Example `.gitignore` entry:
+```
+.env
+.env.local
+*.pyc
+__pycache__/
+.venv/
+venv/
+notes.json
+```
 
 --------------------------------------------------------------------------------
 
@@ -112,10 +133,16 @@ Development
 
 Testing
 
-- There are no automated tests included. Manual testing steps:
-  - Start the app and submit a simple product description.
-  - Verify notes.json is created and contains a saved JSON response.
-  - Test behavior when GEMINI_API_KEY is missing — the GenAI client will likely raise an authentication/connection error.
+No automated test suite is currently included. Manual testing steps:
+
+1. Start the application:
+   ```bash
+   python bis_assistant_ui.py
+   ```
+2. Submit a sample product analysis (e.g., "Electrical manufacturing" → "Electric water heater").
+3. Verify `notes.json` is created and contains the structured JSON response.
+4. Test error handling by temporarily removing or invalidating `GEMINI_API_KEY` in `.env`.
+5. Check UI responsiveness by analyzing multiple products in sequence.
 
 --------------------------------------------------------------------------------
 
@@ -149,14 +176,12 @@ If adding new dependencies, update this README with installation instructions an
 
 License
 
-This project has no license file in the repository. If you want to apply an open-source license, add a LICENSE file (e.g., MIT) and update this section.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
 --------------------------------------------------------------------------------
 
-Contact
+Contributing & Support
 
-Project maintainer: replace with your name and contact email.
+Contributions, bug reports, and feature requests are welcome! Please open an issue or submit a pull request.
 
---------------------------------------------------------------------------------
-
-If you want the README to include example screenshots, CI badges, or a requirements.txt file generated from the current environment, tell me and the preferred license and I will update the repository accordingly.
+For questions or support, contact the project maintainers.
